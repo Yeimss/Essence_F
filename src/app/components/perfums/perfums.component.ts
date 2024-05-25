@@ -11,31 +11,32 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class PerfumsComponent implements OnInit {
   constructor(public perfumService:PerfumsService, private formBuilder:FormBuilder){}
   public formPerfum: FormGroup = new FormGroup({});
-  public notes:any = []
-  public noteTypes:any = []
-  public origins:any = []
-  public showNotes = false;
-  public showNoteTypes = false;
-  public showOrigins = false;
+  public notes:any = [];
+  public noteTypes:any = [];
+  public origins:any = [];
+  public sizes:any = [];
+  public concentrations:any = [];
+  public genders:any = [];
 
   ngOnInit(): void {
-    this.getNotes();
     this.initialiceForm();
+    this.obtenerDatosIniciales();
+  }
+
+
+  obtenerDatosIniciales(){
+    this.getNotes();
     this.getOrigins();
     this.getNoteTypes();
+    this.getConcentrations();
+    this.getGenders();
+    this.getSizes();
   }
-  ocultarTablas(){
-    this.showNotes = false;
-    this.showNoteTypes = false;
-    this.showOrigins = false;
-  }
+
   getNotes(){
     this.perfumService.getNotes().subscribe({
       next: res=>{
         this.notes = res;
-        this.showNotes = true;
-        this.showNoteTypes = false;
-        this.showOrigins = false;
       }, 
       error: error=>{
         console.log(error)
@@ -46,9 +47,6 @@ export class PerfumsComponent implements OnInit {
     this.perfumService.getNoteTypes().subscribe({
       next: res=>{
         this.noteTypes = res;
-        this.showNotes = false;
-        this.showNoteTypes = true;
-        this.showOrigins = false;
       }, 
       error: error=>{
         console.log(error)
@@ -59,9 +57,37 @@ export class PerfumsComponent implements OnInit {
     this.perfumService.getOrigin().subscribe({
       next: res=>{
         this.origins = res;
-        this.showNotes = false;
-        this.showNoteTypes = false;
-        this.showOrigins = true;
+        console.log(this.origins)
+      }, 
+      error: error=>{
+        console.log(error)
+      }
+    })
+  }
+  getConcentrations(){
+    this.perfumService.getConcentrations().subscribe({
+      next: res=>{
+        this.concentrations = res;
+      }, 
+      error: error=>{
+        console.log(error)
+      }
+    })
+  }
+  getGenders(){
+    this.perfumService.getGenders().subscribe({
+      next: res=>{
+        this.genders = res;
+      }, 
+      error: error=>{
+        console.log(error)
+      }
+    })
+  }
+  getSizes(){
+    this.perfumService.getSizes().subscribe({
+      next: res=>{
+        this.sizes = res;
       }, 
       error: error=>{
         console.log(error)
@@ -76,7 +102,7 @@ export class PerfumsComponent implements OnInit {
       gender: ['', [Validators.required]],
       status: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      concentration: ['', [Validators.required, Validators]]
+      concentration: ['', [Validators.required]]
     });
   }
   guardarPerfume(){

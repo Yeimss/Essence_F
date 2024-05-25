@@ -1,49 +1,68 @@
 
-<div class="container">
+<div class="container mt-5">
   <div class="row">
     <form [formGroup]="formPerfum" (ngSubmit)="guardarPerfume()" class="row">
       <div class="col-md-6 col-sm-12 col-lg-4">
         <div class="form-floating mb-3">
           <input formControlName="name" type="text" class="form-control" name="name" id="name" required>
           <label for="name" class="form-label">Nombre:</label>
-          <span class="text-danger" *ngIf="formPerfum.get('name')?.hasError('required')">el nombre es requerido</span>
         </div>
       </div>
       <div class="col-md-6 col-sm-12 col-lg-4">
         <div class="form-floating mb-3">
-          <input formControlName="house" type="text" class="form-control" name="house" id="house" required>
+          <select class="form-select form-select-lg mb-3" formControlName="house" aria-label="Large select example">
+            <option selected disabled value="">Seleccione una opción:</option>
+            <option *ngFor="let item of origins" value="{{item.idHouse}}">{{item.house}}</option>
+          </select>  
           <label for="house" class="form-label">Casa:</label>
-          <span class="text-danger" *ngIf="formPerfum.get('house')?.hasError('required')">el nombre es requerido</span>
         </div>
       </div>
       <div class="col-md-6 col-sm-12 col-lg-4">
         <div class="form-floating mb-3">
-          <input formControlName="gender" type="text" class="form-control" name="gender" id="gender" required>
+          <select class="form-select form-select-lg mb-3" formControlName="gender" aria-label="Large select example">
+            <option selected disabled value="">Seleccione una opción:</option>
+            <option *ngFor="let item of genders" value="{{item.idGender}}">{{item.gender}}</option>
+          </select>  
           <label for="gender" class="form-label">Genero:</label>
-          <span class="text-danger" *ngIf="formPerfum.get('gender')?.hasError('required')">el nombre es requerido</span>
         </div>
       </div>
       <div class="col-md-6 col-sm-12 col-lg-4">
         <div class="form-floating mb-3">
-          <input formControlName="status" type="text" class="form-control" name="status" id="status" required>
+          <select class="form-select form-select-lg mb-3" formControlName="status" aria-label="Large select example">
+            <option selected disabled value="">Seleccione una opción:</option>
+            <option value="1">Activo</option>
+            <option value="0">Inactivo</option>
+          </select>  
           <label for="status" class="form-label">Estado:</label>
-          <span class="text-danger" *ngIf="formPerfum.get('status')?.hasError('required')">el nombre es requerido</span>
         </div>
       </div>
       <div class="col-md-6 col-sm-12 col-lg-4">
+        <div class="form-floating mb-3">
+          <select class="form-select form-select-lg mb-3" formControlName="concentration" aria-label="Large select example">
+            <option selected disabled value="">Seleccione una opción:</option>
+            <option *ngFor="let item of concentrations" value="{{item.idConcentration}}">{{item.concentration}}</option>
+          </select> 
+          <label for="concentration" class="form-label">Concentración:</label>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-0 col-lg-0">
+      </div>  
+      <div class="col-md-12 col-sm-12 col-lg-12 mb-3">
+        <div class="row">
+          <label class="form-label">Tamaños:</label>
+          <div *ngFor="let item of sizes" class="col-1">
+            <input type="checkbox" class="btn-check" id="btn-check-{{item.idSize}}" autocomplete="off">
+            <label class="btn" for="btn-check-{{item.idSize}}">{{item.size}} ml</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12 col-lg-12">
         <div class="form-floating mb-3">
           <input formControlName="description" type="text" class="form-control" name="description" id="description" required>
           <label for="description" class="form-label">Descripción:</label>
-          <span class="text-danger" *ngIf="formPerfum.get('description')?.hasError('required')">el nombre es requerido</span>
         </div>
       </div>
-      <div class="col-md-6 col-sm-12 col-lg-4">
-        <div class="form-floating mb-3">
-          <input formControlName="concentration" type="text" class="form-control" name="concentration" id="concentration" required>
-          <label for="concentration" class="form-label">Concentración:</label>
-          <span class="text-danger" *ngIf="formPerfum.get('concentration')?.hasError('required')">el nombre es requerido</span>
-        </div>
-      </div>
+      
       <div class="d-grid">
         <button class="btn btn-dark btn-lg" data-bs-dismiss="modal"  type="submit">Guardar</button>
       </div>

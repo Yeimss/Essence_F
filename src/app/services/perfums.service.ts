@@ -20,4 +20,13 @@ export class PerfumsService {
   getOrigin(){
     return this.http.get<HouseDto>(`${environment.appUrl}api/notes/getOrigins`)
   }
+  getConcentrations(){
+    return this.http.get<HouseDto>(`${environment.appUrl}api/notes/getConcentrations`)
+  }
+  getGenders(){
+    return this.http.get<HouseDto>(`${environment.appUrl}api/notes/getGenders`)
+  }
+  getSizes(){
+    return this.http.get<HouseDto>(`${environment.appUrl}api/notes/getSizes`)
+  }
 }
