@@ -1,6 +1,11 @@
 
 <div class="container mt-5">
   <div class="row">
+    <div class="col-12 mb-3 text-center">
+      <h2>
+        Agregar perfume
+      </h2>
+    </div>
     <form [formGroup]="formPerfum" (ngSubmit)="guardarPerfume()" class="row">
       <div class="col-md-6 col-sm-12 col-lg-4">
         <div class="form-floating mb-3">
@@ -10,7 +15,7 @@
       </div>
       <div class="col-md-6 col-sm-12 col-lg-4">
         <div class="form-floating mb-3">
-          <select class="form-select form-select-lg mb-3" formControlName="house" aria-label="Large select example">
+          <select class="form-select form-select-lg mb-3 fs-6" formControlName="house" aria-label="Large select example">
             <option selected disabled value="">Seleccione una opción:</option>
             <option *ngFor="let item of origins" value="{{item.idHouse}}">{{item.house}}</option>
           </select>  
@@ -19,16 +24,25 @@
       </div>
       <div class="col-md-6 col-sm-12 col-lg-4">
         <div class="form-floating mb-3">
-          <select class="form-select form-select-lg mb-3" formControlName="gender" aria-label="Large select example">
+          <select class="form-select form-select-lg mb-3 fs-6" formControlName="gender" aria-label="Large select example">
             <option selected disabled value="">Seleccione una opción:</option>
             <option *ngFor="let item of genders" value="{{item.idGender}}">{{item.gender}}</option>
           </select>  
           <label for="gender" class="form-label">Genero:</label>
         </div>
       </div>
+      <div *ngFor="let item of noteTypes" class="col-md-6 col-sm-12 col-lg-4">
+        <div class="form-floating mb-3">
+          <select class="form-select form-select-lg mb-3 fs-6" formControlName="{{eliminarDiacriticos(item.noteType.toLowerCase())}}" aria-label="Large select example">
+            <option selected disabled value="">Seleccione una opción:</option>
+            <option *ngFor="let note of notes" value="{{note.idNote}}">{{note.note}}</option>
+          </select>  
+          <label for="gender" class="form-label">{{item.noteType}}:</label>
+        </div>
+      </div>
       <div class="col-md-6 col-sm-12 col-lg-4">
         <div class="form-floating mb-3">
-          <select class="form-select form-select-lg mb-3" formControlName="status" aria-label="Large select example">
+          <select class="form-select form-select-lg mb-3 fs-6" formControlName="status" aria-label="Large select example">
             <option selected disabled value="">Seleccione una opción:</option>
             <option value="1">Activo</option>
             <option value="0">Inactivo</option>
@@ -38,19 +52,23 @@
       </div>
       <div class="col-md-6 col-sm-12 col-lg-4">
         <div class="form-floating mb-3">
-          <select class="form-select form-select-lg mb-3" formControlName="concentration" aria-label="Large select example">
+          <select class="form-select form-select-lg mb-3 fs-6" formControlName="concentration" aria-label="Large select example">
             <option selected disabled value="">Seleccione una opción:</option>
             <option *ngFor="let item of concentrations" value="{{item.idConcentration}}">{{item.concentration}}</option>
           </select> 
           <label for="concentration" class="form-label">Concentración:</label>
         </div>
       </div>
-      <div class="col-md-6 col-sm-0 col-lg-0">
-      </div>  
+      <div class="col-md-6 col-sm-12 col-lg-4">
+        <div class="form-floating mb-3">
+          <input class="form-control" type="file" id="formFile" formControlName="photo" accept="image/*" (change)="uploadImage($event)">
+          <label for="formFile" class="form-label">Imagen:</label>
+        </div>
+      </div>
       <div class="col-md-12 col-sm-12 col-lg-12 mb-3">
+        <label class="form-label">Tamaños:</label>
         <div class="row">
-          <label class="form-label">Tamaños:</label>
-          <div *ngFor="let item of sizes" class="col-1">
+          <div *ngFor="let item of sizes" class="col-xs-3 col-lg-1 col-md-2 col-sm-2 col-4">
             <input type="checkbox" class="btn-check" id="btn-check-{{item.idSize}}" autocomplete="off">
             <label class="btn" for="btn-check-{{item.idSize}}">{{item.size}} ml</label>
           </div>
@@ -58,11 +76,10 @@
       </div>
       <div class="col-md-12 col-sm-12 col-lg-12">
         <div class="form-floating mb-3">
-          <input formControlName="description" type="text" class="form-control" name="description" id="description" required>
+          <textarea formControlName="description" type="text" class="form-control" name="description" id="description" required></textarea>
           <label for="description" class="form-label">Descripción:</label>
         </div>
       </div>
-      
       <div class="d-grid">
         <button class="btn btn-dark btn-lg" data-bs-dismiss="modal"  type="submit">Guardar</button>
       </div>
