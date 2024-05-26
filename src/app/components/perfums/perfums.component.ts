@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { PerfumsService } from '../../services/perfums.service';
-import { error } from 'console';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2'
 import { PerfumDto } from '../../Models/Perfum/PerfumDto';
-import { read } from 'fs';
+import { SizeDto } from '../../Models/Perfum/SizeDto';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-perfums',
@@ -21,6 +21,7 @@ export class PerfumsComponent implements OnInit {
   public concentrations:any = [];
   public genders:any = [];
   public base64image: string | ArrayBuffer = "";
+  public tamañosObtenidos: any;
   
   ngOnInit(): void {
     this.obtenerDatosIniciales();
@@ -116,27 +117,36 @@ export class PerfumsComponent implements OnInit {
       console.log('Error: ', error);
     };
   }
+  alertError(msj:string){
+    let timerInterval :any;
+    Swal.fire({
+      title: "Error",
+      html: msj,
+      timer: 1000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const timer = Swal.getPopup()?.querySelector("b");
+        timerInterval = setInterval(() => {
+          if(timer){
+            timer.textContent = `${Swal.getTimerLeft()}`;
+          }
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      }
+    }).then((result) => {});
+  }
   guardarPerfume(){
-/*     Swal.fire({
-      title: "Sweet!",
-      text: "Modal with a custom image.",
-      imageUrl: this.base64image.toString(),
-      imageWidth: 400,
-      imageHeight: 200,
-      imageAlt: "Custom image"
-    }); */
     if(this.formPerfum.valid){
       this.mappearDatosPerfume()
     }else{
-      Swal.fire({
-        title: 'Error!',
-        text: 'Por favor ingresa todos los campos',
-        icon: 'error',
-        confirmButtonText: 'Cool'
-      })
+      this.alertError("Por favor diligenciar todos los datos")
     }
   }
   mappearDatosPerfume(){
+    this.tamañosObtenidos = this.mappearSizes()
     let datos = this.formPerfum.value
     let perfum:PerfumDto = {
       name : datos.name,
@@ -151,7 +161,19 @@ export class PerfumsComponent implements OnInit {
     console.log(perfum)
   }
   mappearSizes(){
+    let tamaños : any = [];
+    
+    this.sizes.forEach((size:any) => {
+      if($('#btn-check-'+size.idSize).is(":checked")){
+        let tamaño:SizeDto = {
+          idSize: size.idSize,
+          size: size.size
+        }
+        tamaños.push(tamaño); 
+      }
+    });
 
+    return tamaños;
   }
   obtenerOrigin(house:number):number{
     this.origins.forEach((item:any) => {
