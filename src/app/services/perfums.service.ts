@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment.development';
 import { NotesDto } from '../Models/Perfum/NotesDto';
 import { NoteTypeDto } from '../Models/Perfum/NoteTypeDto';
 import { HouseDto } from '../Models/Perfum/OriginsDto';
+import { PerfumDto } from '../Models/Perfum/PerfumDto';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,10 @@ export class PerfumsService {
   }
   getSizes(){
     return this.http.get<HouseDto>(`${environment.appUrl}api/notes/getSizes`)
+  }
+  insertPerfum(datos:PerfumDto){
+    return this.http.post(`${environment.appUrl}api/Perfum/InsertPerfum'`, datos, {
+      responseType: 'json'
+    })
   }
 }
