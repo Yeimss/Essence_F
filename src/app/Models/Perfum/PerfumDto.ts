@@ -1,10 +1,10 @@
 export interface PerfumDto{
-      name  : string
-      idHouse : number
-      idGender : number
-      idOrigin : number
-      status : boolean
-      description : string
-      idConcentration : number
-      photo : string | ArrayBuffer
+      Name  : string
+      IdHouse : number
+      IdGender : number
+      IdOrigin : number
+      Status : boolean
+      Description : string
+      IdConcentration : number
+      Photo : string | ArrayBuffer
 }

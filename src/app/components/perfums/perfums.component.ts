@@ -117,10 +117,10 @@ export class PerfumsComponent implements OnInit {
       console.log('Error: ', error);
     };
   }
-  alertError(msj:string){
+  alertError(titulo:string,msj:string){
     let timerInterval :any;
     Swal.fire({
-      title: "Error",
+      title: titulo,
       html: msj,
       timer: 1000,
       timerProgressBar: true,
@@ -140,25 +140,34 @@ export class PerfumsComponent implements OnInit {
   }
   guardarPerfume(){
     if(this.formPerfum.valid){
-      this.mappearDatosPerfume()
+      this.mappearDatosPerfume();
     }else{
-      this.alertError("Por favor diligenciar todos los datos")
+      this.alertError("Error","Por favor diligenciar todos los datos")
     }
   }
   mappearDatosPerfume(){
     this.tamañosObtenidos = this.mappearSizes()
     let datos = this.formPerfum.value
     let perfum:PerfumDto = {
-      name : datos.name,
-      idHouse : datos.house,
-      idGender : datos.gender,
-      idOrigin : this.obtenerOrigin(datos.house),
-      status : datos.status == 0 ? false : true,
-      description : datos.description,
-      idConcentration : datos.concentration,
-      photo : this.base64image
+      Name : datos.name,
+      IdHouse : datos.house,
+      IdGender : datos.gender,
+      IdOrigin : this.obtenerOrigin(datos.house),
+      Status : datos.status == 0 ? false : true,
+      Description : datos.description,
+      IdConcentration : datos.concentration,
+      Photo : this.base64image
     }
-    console.log(perfum)
+    this.perfumService.insertPerfum(perfum).subscribe({
+      next: res => {
+        this.formPerfum.reset()
+        this.alertError("Exito","Perfume ingresado exitosamente")
+      },
+      error: e => {
+        this.alertError("Error","No se pudo guardar el perfume")
+        console.log(e)
+      }
+    })
   }
   mappearSizes(){
     let tamaños : any = [];
@@ -189,7 +198,6 @@ export class PerfumsComponent implements OnInit {
   initialiceForm(){
     this.formPerfum = this.formBuilder.group({
       name: ['', [Validators.required]],
-      //size:['',[Validators.required]],
       house: ['', [Validators.required]],
       gender: ['', [Validators.required]],
       salida: ['', [Validators.required]],
