@@ -31,8 +31,6 @@ export class PerfumsService {
     return this.http.get<HouseDto>(`${environment.appUrl}api/notes/getSizes`)
   }
   insertPerfum(datos:PerfumDto){
-    return this.http.post(`${environment.appUrl}api/Perfum/InsertPerfum'`, datos, {
-      responseType: 'json'
-    })
+    return this.http.post(`${environment.appUrl}api/Perfum/InsertPerfum`, datos)
   }
 }
