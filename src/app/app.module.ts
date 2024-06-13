@@ -11,6 +11,7 @@ import { FooterComponent } from './components/layout/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SideBarComponent } from './components/layout/side-bar/side-bar.component';
+import { CatalogComponent } from './components/catalog/catalog.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SideBarComponent } from './components/layout/side-bar/side-bar.componen
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    SideBarComponent
+    SideBarComponent,
+    CatalogComponent
   ],
   imports: [
     BrowserModule,

@@ -162,6 +162,7 @@ export class PerfumsComponent implements OnInit {
       next: res => {
         this.formPerfum.reset()
         this.alertError("Exito","Perfume ingresado exitosamente")
+        console.log(res);
       },
       error: e => {
         this.alertError("Error","No se pudo guardar el perfume")
@@ -185,12 +186,13 @@ export class PerfumsComponent implements OnInit {
     return tamaños;
   }
   obtenerOrigin(house:number):number{
+    var origen = 0;
     this.origins.forEach((item:any) => {
       if(item.idHouse == house){
-        return item.idOrigin
+        origen = item.idOrigin;
       }
     });
-    return 0
+    return origen;
   }
   eliminarDiacriticos(texto:string) {
     return texto.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
